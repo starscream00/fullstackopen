@@ -16,42 +16,47 @@ const Statistics = ({ stats }) => {
   return (
     <>
       <h2>Statistics</h2>
-      <Stats
-        label={"good"}
-        value={stats.good}
-      />
-      <Stats
-        label={"neutral"}
-        value={stats.neutral}
-      />
-      <Stats
-        label={"bad"}
-        value={stats.bad}
-      />
-      <Stats
-        label={"all"}
-        value={stats.good + stats.neutral + stats.bad}
-      />
-
-      <Stats
-        label={"average"}
-        value={
-          stats.good + stats.neutral + stats.bad
-            ? (stats.good - stats.bad) /
-              (stats.good + stats.neutral + stats.bad)
-            : 0
-        }
-      />
-      <Stats
-        label={"positive"}
-        value={
-          (stats.good
-            ? stats.good / (stats.good + stats.neutral + stats.bad)
-            : 0) *
-            100 +
-          " %"
-        }
-      />
+      {stats.good + stats.neutral + stats.bad > 0 ? (
+        <>
+          <Stats
+            label={"good"}
+            value={stats.good}
+          />
+          <Stats
+            label={"neutral"}
+            value={stats.neutral}
+          />
+          <Stats
+            label={"bad"}
+            value={stats.bad}
+          />
+          <Stats
+            label={"all"}
+            value={stats.good + stats.neutral + stats.bad}
+          />
+          <Stats
+            label={"average"}
+            value={
+              stats.good + stats.neutral + stats.bad
+                ? (stats.good - stats.bad) /
+                  (stats.good + stats.neutral + stats.bad)
+                : 0
+            }
+          />
+          <Stats
+            label={"positive"}
+            value={
+              (stats.good
+                ? stats.good / (stats.good + stats.neutral + stats.bad)
+                : 0) *
+                100 +
+              " %"
+            }
+          />
+        </>
+      ) : (
+        "Noo feedback given"
+      )}
     </>
   );
 };
