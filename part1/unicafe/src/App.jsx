@@ -6,9 +6,10 @@ const Button = (props) => {
 
 const StatisticLine = (props) => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
@@ -17,43 +18,45 @@ const Statistics = ({ stats }) => {
     <>
       <h2>Statistics</h2>
       {stats.good + stats.neutral + stats.bad > 0 ? (
-        <>
-          <StatisticLine
-            text={"good"}
-            value={stats.good}
-          />
-          <StatisticLine
-            text={"neutral"}
-            value={stats.neutral}
-          />
-          <StatisticLine
-            text={"bad"}
-            value={stats.bad}
-          />
-          <StatisticLine
-            text={"all"}
-            value={stats.good + stats.neutral + stats.bad}
-          />
-          <StatisticLine
-            text={"average"}
-            value={
-              stats.good + stats.neutral + stats.bad
-                ? (stats.good - stats.bad) /
-                  (stats.good + stats.neutral + stats.bad)
-                : 0
-            }
-          />
-          <StatisticLine
-            text={"positive"}
-            value={
-              (stats.good
-                ? stats.good / (stats.good + stats.neutral + stats.bad)
-                : 0) *
-                100 +
-              " %"
-            }
-          />
-        </>
+        <table>
+          <tbody>
+            <StatisticLine
+              text={"good"}
+              value={stats.good}
+            />
+            <StatisticLine
+              text={"neutral"}
+              value={stats.neutral}
+            />
+            <StatisticLine
+              text={"bad"}
+              value={stats.bad}
+            />
+            <StatisticLine
+              text={"all"}
+              value={stats.good + stats.neutral + stats.bad}
+            />
+            <StatisticLine
+              text={"average"}
+              value={
+                stats.good + stats.neutral + stats.bad
+                  ? (stats.good - stats.bad) /
+                    (stats.good + stats.neutral + stats.bad)
+                  : 0
+              }
+            />
+            <StatisticLine
+              text={"positive"}
+              value={
+                (stats.good
+                  ? stats.good / (stats.good + stats.neutral + stats.bad)
+                  : 0) *
+                  100 +
+                " %"
+              }
+            />
+          </tbody>
+        </table>
       ) : (
         "Noo feedback given"
       )}
