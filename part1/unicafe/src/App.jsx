@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 const Button = (props) => {
-  return <button onClick={props.handleClick}>{props.label}</button>;
+  return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
-const Stats = (props) => {
+const StatisticLine = (props) => {
   return (
     <p>
-      {props.label} {props.value}
+      {props.text} {props.value}
     </p>
   );
 };
@@ -18,24 +18,24 @@ const Statistics = ({ stats }) => {
       <h2>Statistics</h2>
       {stats.good + stats.neutral + stats.bad > 0 ? (
         <>
-          <Stats
-            label={"good"}
+          <StatisticLine
+            text={"good"}
             value={stats.good}
           />
-          <Stats
-            label={"neutral"}
+          <StatisticLine
+            text={"neutral"}
             value={stats.neutral}
           />
-          <Stats
-            label={"bad"}
+          <StatisticLine
+            text={"bad"}
             value={stats.bad}
           />
-          <Stats
-            label={"all"}
+          <StatisticLine
+            text={"all"}
             value={stats.good + stats.neutral + stats.bad}
           />
-          <Stats
-            label={"average"}
+          <StatisticLine
+            text={"average"}
             value={
               stats.good + stats.neutral + stats.bad
                 ? (stats.good - stats.bad) /
@@ -43,8 +43,8 @@ const Statistics = ({ stats }) => {
                 : 0
             }
           />
-          <Stats
-            label={"positive"}
+          <StatisticLine
+            text={"positive"}
             value={
               (stats.good
                 ? stats.good / (stats.good + stats.neutral + stats.bad)
@@ -84,15 +84,15 @@ const App = () => {
       <h2>Give Feedbacks</h2>
 
       <Button
-        label={"good"}
+        text={"good"}
         handleClick={() => clickHandler("good", stats)}
       />
       <Button
-        label={"neutral"}
+        text={"neutral"}
         handleClick={() => clickHandler("neutral", stats)}
       />
       <Button
-        label={"bad"}
+        text={"bad"}
         handleClick={() => clickHandler("bad", stats)}
       />
       <Statistics stats={stats} />
