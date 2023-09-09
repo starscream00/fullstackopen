@@ -1,71 +1,44 @@
-import Note from "./components/Note";
 import { useState } from "react";
+
 const App = () => {
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      content: "HTML is easy",
-      important: true,
-    },
-    {
-      id: 2,
-      content: "Browser can execute only JavaScript",
-      important: false,
-    },
-    {
-      id: 3,
-      content: "GET and POST are the most important methods of HTTP protocol",
-      important: true,
-    },
-  ]);
+  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [newName, setNewName] = useState("");
 
-  const [newNote, setNewNote] = useState("a new note...");
-  const [showAll, setShowAll] = useState(true);
-  const addNote = (event) => {
+  const addContact = (event) => {
     event.preventDefault();
-    console.log("button clicked", event.target);
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-      id: notes.length + 1,
-    };
+    console.log("value", event.target.value);
 
-    setNotes(notes.concat(noteObject));
-    setNewNote("");
+    console.log("fired", "addContact");
+    setPersons(persons.concat({ name: newName }));
+    setNewName("");
   };
-  const notesToShow = showAll
-    ? notes
-    : notes.filter((note) => note.important === true);
-  const handleNoteChange = (event) => {
+  const newNameHandler = (event) => {
     console.log(event.target.value);
-    setNewNote(event.target.value);
+
+    setNewName(event.target.value);
   };
+
   return (
     <div>
-      <h1>Notes</h1>
-      <ul>
-        <ul>
-          {notesToShow.map((note) => (
-            <Note
-              key={note.id}
-              note={note}
-            />
-          ))}
-        </ul>
-      </ul>
-      <form onSubmit={addNote}>
-        <input
-          value={newNote}
-          onChange={handleNoteChange}
-        />
-        <br />
-        <button type="submit">save</button>
+      <h2>Phonebook</h2>
+      <form onSubmit={addContact}>
+        <div>
+          name:{" "}
+          <input
+            value={newName}
+            onChange={newNameHandler}
+          />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
       </form>
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? "important" : "all"}
-        </button>
-      </div>
+      <h2>Numbers</h2>
+      <ul>
+        {persons.map((person) => (
+          <li key={person.name}>{person.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
