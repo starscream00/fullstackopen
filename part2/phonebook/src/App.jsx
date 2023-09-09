@@ -6,11 +6,15 @@ const App = () => {
 
   const addContact = (event) => {
     event.preventDefault();
-    console.log("value", event.target.value);
-
     console.log("fired", "addContact");
-    setPersons(persons.concat({ name: newName }));
-    setNewName("");
+
+    if (persons.find((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      console.log("aborted");
+    } else {
+      setPersons(persons.concat({ name: newName }));
+      setNewName("");
+    }
   };
   const newNameHandler = (event) => {
     console.log(event.target.value);
