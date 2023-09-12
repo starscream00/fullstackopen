@@ -15,11 +15,8 @@ const App = () => {
   // const [filter, setFilter] = useState([]);
   const addContact = (event) => {
     event.preventDefault();
-    console.log("fired", "addContact");
-
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
-      console.log("aborted");
     } else {
       setPersons(persons.concat({ name: newName, number: newNumber }));
       setNewName("");
@@ -27,17 +24,12 @@ const App = () => {
     }
   };
   const newNameHandler = (event) => {
-    console.log(event.target.value);
-
     setNewName(event.target.value);
   };
   const newNumberHandler = (event) => {
-    console.log(event.target.value);
-
     setNewNumber(event.target.value.toString());
   };
   const filterHandler = (event) => {
-    console.log("filter", event.target.value);
     setFilterString(event.target.value);
   };
   const filtered = persons.filter(
@@ -45,7 +37,6 @@ const App = () => {
       (filterString.length > 0) &
       person.name.toLowerCase().includes(filterString)
   );
-  console.log("filtered", filtered);
 
   return (
     <div>
