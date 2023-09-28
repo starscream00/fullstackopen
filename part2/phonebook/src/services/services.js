@@ -8,5 +8,13 @@ const getAll = () => {
 const post = (load) => {
   return axios.post(baseUrl, load).then((response) => response.data);
 };
+
+const erase = (id) => {
+  return axios.delete(baseUrl + "/" + id).then((res) => console.log(res));
+};
+
+const put = (id, data) => {
+  return axios.put(baseUrl + "/" + id, data).then((response) => response.data);
+};
 //can be converted to async function
-export default { getAll, post };
+export default { getAll, post, erase, put };

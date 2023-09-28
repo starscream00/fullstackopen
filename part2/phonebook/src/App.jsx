@@ -12,8 +12,20 @@ const App = () => {
   // const [filter, setFilter] = useState([]);
   const addContact = (event) => {
     event.preventDefault();
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+    const target = persons.find((person) => person.name === newName);
+    if (target.name === newName) {
+      const update = window.confirm(
+        `Would you like to update ${target.name}'s number ?`
+      );
+      if (update) {
+        services
+          .put(target.id, { name: newName, number: newNumber })
+          .then((res) => {
+            setPersons(
+              persons.map((person) => (person.name !== res.name ? person : res))
+            );
+          });
+      }
     } else {
       services
         .post({ name: newName, number: newNumber })
@@ -52,6 +64,18 @@ const App = () => {
       });
     console.log("getAll");
   }, []);
+  const deleteHandler = (id) => {
+    const confirmation = window.confirm(
+      `Are you sure you want to delete ${
+        persons.find((person) => person.id === id).name
+      }?`
+    );
+    if (confirmation) {
+      services.erase(id).catch((error) => alert(error));
+      const newData = services.getAll();
+      newData.then((res) => setPersons(res)).catch((error) => alert(error));
+    }
+  };
 
   return (
     <div>
@@ -74,6 +98,7 @@ const App = () => {
         filterString={filterString}
         filtered={filtered}
         persons={persons}
+        deleteHandler={deleteHandler}
       />
     </div>
   );
