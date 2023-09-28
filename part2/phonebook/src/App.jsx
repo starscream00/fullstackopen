@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import axios from "axios";
+// import axios from "axios";
+import services from "./services/services";
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -14,15 +15,13 @@ const App = () => {
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      axios
-        .post("http://localhost:3001/persons", {
-          name: newName,
-          number: newNumber,
+      services
+        .post({ name: newName, number: newNumber })
+        .then((res) => {
+          console.log("res", res);
+          setPersons(persons.concat(res));
         })
-        .then((response) => {
-          console.table(response.data);
-          setPersons(persons.concat(response.data));
-        });
+        .catch((error) => alert(error));
 
       setNewName("");
       setNewNumber("");
@@ -44,18 +43,15 @@ const App = () => {
   );
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((res) => setPersons(res.data));
+    const data = services.getAll();
+    data
+      .then((res) => setPersons(res))
+      .catch((error) => {
+        alert(error);
+        console.log("error", error);
+      });
+    console.log("getAll");
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:3001/persons", {
-  //       name: "M",
-  //       number: "39-23-6423122",
-  //     })
-  //     .then((res) => );
-  // }, []);
 
   return (
     <div>
