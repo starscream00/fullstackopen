@@ -14,7 +14,16 @@ const App = () => {
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons(persons.concat({ name: newName, number: newNumber }));
+      axios
+        .post("http://localhost:3001/persons", {
+          name: newName,
+          number: newNumber,
+        })
+        .then((response) => {
+          console.table(response.data);
+          setPersons(persons.concat(response.data));
+        });
+
       setNewName("");
       setNewNumber("");
     }
@@ -39,6 +48,14 @@ const App = () => {
       .get("http://localhost:3001/persons")
       .then((res) => setPersons(res.data));
   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:3001/persons", {
+  //       name: "M",
+  //       number: "39-23-6423122",
+  //     })
+  //     .then((res) => );
+  // }, []);
 
   return (
     <div>
